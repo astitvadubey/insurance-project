@@ -1,20 +1,20 @@
-- name : Configure Docker on EC2 Instances
-  hosts : all
-  become: true
-  connection : ssh
-  tasks : 
-  - name: updating apt
-    command : sudo apt-get update
+# ansible-playbook.yml 
+---
+- name: Deploy to Kubernetes master
+  hosts: kubernetes_master
+  tasks:
+    - name: Copy manifest to Kubernetes master
+      ansible.builtin.copy:
+        src: "/home/devopsadmin/workspace/IInsurance_deploy_Ansiblecontroller/kubernetesdeploy.yaml"
+        dest: "/home/devopsadmin/kubernetesdeploy.yaml"
+        # Optional: Add validation if needed
+        # validate: 'kubectl apply -f %s --dry-run=client'
 
-  - name : Install Docker
-    command : sudo apt-get install -y docker.io
-    become : yes
-    become_user : root
+    - name: Apply the manifest
+      ansible.builtin.shell:
+        cmd: "kubectl apply -f /home/devopsadmin/kubernetesdeploy.yaml"
+      register: kubectl_output
 
-  - name : Start Docker Service
-    command : sudo systemctl start docker
-    become : yes
-    become_user : root
-
-  - name: Deploy Docker Container
-    command: docker run -itd -p 8084:8081 shubhamkushwah123/insure-me:3.0
+    - name: Print deployment result
+      ansible.builtin.debug:
+        var: kubectl_output.stdout
