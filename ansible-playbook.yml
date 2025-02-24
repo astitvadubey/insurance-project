@@ -7,8 +7,7 @@
       ansible.builtin.copy:
         src: "/home/devopsadmin/workspace/Insurance_deploy_Ansiblecontroller/Insurance_kubernetesdeploy.yaml"
         dest: "/home/devopsadmin/kubernetesdeploy.yaml"
-        # Optional: Add validation if needed
-        # validate: 'kubectl apply -f %s --dry-run=client'
+     
 
     - name: Apply the manifest
       ansible.builtin.shell:
