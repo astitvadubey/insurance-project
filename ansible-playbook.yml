@@ -6,12 +6,12 @@
     - name: Copy manifest to Kubernetes master
       ansible.builtin.copy:
         src: "/home/devopsadmin/workspace/Insurance_deploy_Ansiblecontroller/Insurance_kubernetesdeploy.yaml"
-        dest: "/home/devopsadmin/kubernetesdeploy.yaml"
+        dest: "/home/devopsadmin/Insurance_kubernetesdeploy.yaml"
      
 
     - name: Apply the manifest
       ansible.builtin.shell:
-        cmd: "kubectl apply -f /home/devopsadmin/kubernetesdeploy.yaml"
+        cmd: "kubectl apply -f /home/devopsadmin/Insurance_kubernetesdeploy.yaml"
       register: kubectl_output
 
     - name: Print deployment result
